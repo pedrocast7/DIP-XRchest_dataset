@@ -145,3 +145,65 @@ for k=1:2
     subplot(colums,lines,k+lines);
     imhist(A{k});
 end
+
+
+%%
+%aplicações de operações aritméticas 
+%soma
+soma_img_t1_m = tubeIm_m{1} + tubeIm_m{1};
+soma = tubeIm_m{1} + normIm_m{1};
+
+%subtração
+%Pode ser utilizada para calcular o gradiente(detecção de bordas)
+sub_img_t1_m  = imsubtract(tubeIm_m{1},tubeIm_m{1});
+sub = tubeIm_m{1} + normIm_m{1};
+
+%multiplicação
+mult_img_t1_m  = 2*(tubeIm_m{1});
+mult_img_n1_m  = 2*(normIm_m{1});
+
+%divisão
+img = 1+(tubeIm_m{1});
+div_img_t1_m  = (img)/2;
+img2 = 1+(normIm_m{1});
+div_img_n1_m  = (img2)/2;
+
+%combinação linear
+comb_img_t1_m = 0.3*(tubeIm_m{1}) + 0.7*(tubeIm_m{1});
+comb = 0.3*(normIm_m{1}) + 0.7*(normIm_m{1});
+
+%plotagem
+figure('Units','normalized','Color','w','Menubar','none','Position',[0 0 1 1]);
+subplot(2,5,1);
+imshow(soma_img_t1_m);
+title("SOMA");
+subplot(2,5,2);
+imshow(sub_img_t1_m);
+title("SUBTRAÇÃO");
+subplot(2,5,3);
+imshow(mult_img_t1_m);
+title("MULTIPLICAÇÃO");
+subplot(2,5,4);
+imshow(div_img_t1_m);
+title("DIVISÃO");
+subplot(2,5,5);
+imshow(comb_img_t1_m);
+title("COMBINAÇÃO LINEAR");
+
+subplot(2,5,6);
+imshow(soma_img_t1_m);
+title("SOMA");
+subplot(2,5,7);
+imshow(sub_img_t1_m);
+title("SUBTRAÇÃO");
+subplot(2,5,8);
+imshow(mult_img_t1_m);
+title("MULTIPLICAÇÃO");
+subplot(2,5,9);
+imshow(div_img_t1_m);
+title("DIVISÃO");
+subplot(2,5,10);
+imshow(comb_img_t1_m);
+title("COMBINAÇÃO LINEAR");
+
+
