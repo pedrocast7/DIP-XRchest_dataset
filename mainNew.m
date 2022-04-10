@@ -123,7 +123,7 @@ tubeBox = boxplot([tubeMin,  tubeMax, tubeMean, tubeDesv]);
 %quant: quantidade de realce ou suavização desejada.
 lim_borda = 0.1;
 quant = 1;
-teste1 = localcontrast(tubeIm_m{1}, lim_borda, quant);
+teste1 = localcontrast(tubeIm_m{4}, lim_borda, quant);
 figure()
 subplot(2,2,1);
 imshow(teste1);
