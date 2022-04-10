@@ -32,7 +32,6 @@ for k=1:numel(normIm)
     normIm_m{k} = rgb2gray(normIm{k});
 end
 
-%%
 %Imagem em escala de cinza - dataset tuberculose
 for k=1:numel(tubeIm)
     tubeIm_m{k} = rgb2gray(tubeIm{k});
@@ -52,7 +51,6 @@ for k=1:numel(normIm)
     title("Raio-X depois");
 end
 
-%%
 %Antes e depois de aplicar a escala de cinza - tuberculose
 lines = numel(tubeIm);
 figure('Units','normalized','Color','w','Menubar','none','Position',[0 0 1 1])
@@ -79,7 +77,6 @@ for k=1:lines
     %title("Raio-X depois");
 end
 
-%%
 %Histograma para as imagens em escala de cinza - tuberculose
 figure()
 for k=1:lines
@@ -92,14 +89,15 @@ for k=1:lines
 end
 
 %%
-%Valor de min, max e sd - controle 
+%All values joined array 
 normAll = cell2mat(normIm_m);
 tubeAll = cell2mat(tubeIm_m);
 
+%Valor de min, max - controle 
 normMin = min(normAll,[],'all');
 normMax = max(tubeAll,[],'all');
 
-%Valor de min, max e sd - tuberculose 
+%Valor de min, max - tuberculose 
 tubeMin = min(normAll,[],'all');
 tubeMax = max(tubeAll,[],'all');
 
@@ -110,3 +108,9 @@ tubeMean = mean(tubeAll,'all');
 %Desvio Padrão
 normDesv = std(double(normAll(:)));
 tubeDesv = std(double(tubeAll(:)));
+
+%Box plot
+figure()
+normBox = boxplot([normMin,  normMax, normMean, normDesv]);
+figure()
+tubeBox = boxplot([tubeMin,  tubeMax, tubeMean, tubeDesv]);
