@@ -11,6 +11,12 @@ for k=1:numel(files)
   normIm{k}=imread(path+files{k});
 end
 
+%Salvando info sample 'normal'
+Pulmao_normal = path + files{1};
+img_inf_normal = imageinfo(Pulmao_normal)
+
+
+
 %tuberculose
 path = "dataset/tuberculose/";
 f=dir(path+"*.png");
@@ -19,12 +25,9 @@ for k=1:numel(files)
   tubeIm{k}=imread(path+files{k});
 end
 
-%%
-%info image
-Pulmao_normal = normIm{1};
-whos Pulmao_normal
-Pulmao_tuberculoso = tubeIm{1};
-whos Pulmao_tuberculoso;
+%Salvando info sample 'tuberculose'
+Pulmao_tuberculoso = path + files{1};
+img_inf_tuberculoso = imageinfo(Pulmao_tuberculoso)
 
 %%
 %Imagem em escala de cinza - dataset controle
@@ -111,9 +114,13 @@ tubeDesv = std(double(tubeAll(:)));
 
 %Box plot
 figure()
+subplot(1,2,1);
 normBox = boxplot([normMin,  normMax, normMean, normDesv]);
-figure()
+title('Normal');
+
+subplot(1,2,2);
 tubeBox = boxplot([tubeMin,  tubeMax, tubeMean, tubeDesv]);
+title('Tuberculoso');
 
 %%
 %Aplicação de contraste - Tuberculose
@@ -156,7 +163,7 @@ soma = tubeIm_m{1} + normIm_m{1};
 %subtração
 %Pode ser utilizada para calcular o gradiente(detecção de bordas)
 sub_img_t1_m  = imsubtract(tubeIm_m{1},tubeIm_m{1});
-sub = tubeIm_m{1} + normIm_m{1};
+sub = tubeIm_m{1} - normIm_m{1};
 
 %multiplicação
 mult_img_t1_m  = 2*(tubeIm_m{1});
@@ -173,37 +180,51 @@ comb_img_t1_m = 0.3*(tubeIm_m{1}) + 0.7*(tubeIm_m{1});
 comb = 0.3*(normIm_m{1}) + 0.7*(normIm_m{1});
 
 %plotagem
-figure('Units','normalized','Color','w','Menubar','none','Position',[0 0 1 1]);
-subplot(2,5,1);
-imshow(soma_img_t1_m);
-title("SOMA");
-subplot(2,5,2);
-imshow(sub_img_t1_m);
-title("SUBTRAÇÃO");
-subplot(2,5,3);
-imshow(mult_img_t1_m);
-title("MULTIPLICAÇÃO");
-subplot(2,5,4);
-imshow(div_img_t1_m);
-title("DIVISÃO");
-subplot(2,5,5);
-imshow(comb_img_t1_m);
-title("COMBINAÇÃO LINEAR");
+figure("Name","Operações Aritméticas",'Units','normalized','Color','w','Menubar','none','Position',[0 0 1 1]);
+all_op_TandN = {soma_img_t1_m, sub_img_t1_m, mult_img_t1_m, div_img_t1_m, comb_img_t1_m, soma, sub, mult_img_n1_m, div_img_n1_m, comb};
+operation_names = ["SOMA","SUBTRAÇÃO","MULTIPLICAÇÃO","DIVISÃO","COMBINAÇÃO LINEAR", "TUBERCULOSO", "NORMAL"];
+counter2=0;
 
-subplot(2,5,6);
-imshow(soma_img_t1_m);
-title("SOMA");
-subplot(2,5,7);
-imshow(sub_img_t1_m);
-title("SUBTRAÇÃO");
-subplot(2,5,8);
-imshow(mult_img_t1_m);
-title("MULTIPLICAÇÃO");
-subplot(2,5,9);
-imshow(div_img_t1_m);
-title("DIVISÃO");
-subplot(2,5,10);
-imshow(comb_img_t1_m);
-title("COMBINAÇÃO LINEAR");
+for counter1=1:10
+        subplot(2,5,counter1);
+        imshow(all_op_TandN{counter1});
+        if counter1>=6
+            counter2 = counter1 - 5;
+            check_disease = 7;
+        else
+            counter2 = counter1;
+            check_disease = 6;
+        end
+        title(operation_names(counter2) + " " + operation_names(check_disease));
+          
+end
 
-
+% title("SOMA");
+% subplot(2,5,2);
+% imshow(sub_img_t1_m);
+% title("SUBTRAÇÃO");
+% subplot(2,5,3);
+% imshow(mult_img_t1_m);
+% title("MULTIPLICAÇÃO");
+% subplot(2,5,4);
+% imshow(div_img_t1_m);
+% title("DIVISÃO");
+% subplot(2,5,5);
+% imshow(comb_img_t1_m);
+% title("COMBINAÇÃO LINEAR");
+% 
+% subplot(2,5,6);
+% imshow(soma_img_t1_m);
+% title("SOMA");
+% subplot(2,5,7);
+% imshow(sub_img_t1_m);
+% title("SUBTRAÇÃO");
+% subplot(2,5,8);
+% imshow(mult_img_t1_m);
+% title("MULTIPLICAÇÃO");
+% subplot(2,5,9);
+% imshow(div_img_t1_m);
+% title("DIVISÃO");
+% subplot(2,5,10);
+% imshow(comb_img_t1_m);
+% title("COMBINAÇÃO LINEAR");
