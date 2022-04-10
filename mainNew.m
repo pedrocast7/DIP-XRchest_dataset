@@ -114,3 +114,34 @@ figure()
 normBox = boxplot([normMin,  normMax, normMean, normDesv]);
 figure()
 tubeBox = boxplot([tubeMin,  tubeMax, tubeMean, tubeDesv]);
+
+
+%Aplicação de contraste - Tuberculose
+%função 'localcontrast' - aumenta o contraste local da imagem em tons de cinza ou RGB
+%Aumenta ou suaviza os detalhes, deixando as bordas fortes inalteradas
+%lim_borda: define a amplitude de intensidade mínima de bordas fortes para deixar intactas
+%quant: quantidade de realce ou suavização desejada.
+lim_borda = 0.1;
+quant = 1;
+teste1 = localcontrast(tubeIm_m{1}, lim_borda, quant);
+figure()
+subplot(2,2,1);
+imshow(teste1);
+subplot(2,2,2);
+imshow(tubeIm_m{4});
+subplot(2,2,3);
+imhist(teste1);
+subplot(2,2,4);
+imhist(tubeIm_m{4});
+
+%função histeq - melhora o contraste usando a equalização de histograma
+teste2 = histeq(tubeIm_m{4});
+figure()
+subplot(2,2,1);
+imshow(teste2);
+subplot(2,2,2);
+imshow(tubeIm_m{4});
+subplot(2,2,3);
+imhist(teste2);
+subplot(2,2,4);
+imhist(tubeIm_m{4});
